@@ -448,3 +448,171 @@ if(!Object.is || true) {
         );
 
         // there  is using only join output will be a string
+
+        // there is another way to do it let's see
+
+        numStudents = 10;
+        console.log(
+            `There are ${numStudents.toString()} students.`
+        ); // this is well formed
+        
+        // another better way using fundamental object without an new keyword;
+
+        numStudents = 19;
+        console.log(
+                `There are ${String(numStudents)} students.`
+        )
+
+        // okay okay what about other wau
+        function addAStudent(numStudents) {
+            return numStudents + 1;
+        }
+                    // okay  here ve go with second side of the function if we do decrement instead of the increment it only does two Number operation
+                    function addAStudent1(numStudents) {
+                        return numStudents - 1;
+                    }
+        
+        const studentInput = document.querySelector('.input');
+        const button = document.querySelector('.button')
+        button.addEventListener('click', () => {
+            console.log(typeof addAStudent(studentInput.value));   // ---> "161"
+            
+            // okay okay there is a way to force it to do a number operation
+
+            console.log(addAStudent(
+                +studentInput.value // ---> 17
+                /// if we put plus in the beginning of it, it invokes two number operation; then output will be 17 it we enter 16;
+            ));
+
+            // okay  here ve go with second side of the function if we do decrement instead of the increment it only does two Number operation
+            
+            // like here 
+            console.log(addAStudent1(
+                studentInput.value // --> 15
+            ))
+
+            // yeah but...
+        // recall truthy vs falsy
+
+        if(studentInput.value) {
+            numStudents = Number(studentInput.value);
+        }
+
+        console.log('student num : ', numStudents);
+
+        })
+
+        
+
+        // while (newstudents.length) {
+        //     enrollStudents(newstudents.pop())
+        // }  i commented this cuz, i have not declared that array and function
+
+
+        // lets change the form of writing , 
+
+        if(!!studentInput.value) {
+            numStudents = Number(studentInput.value);
+        }
+
+        console.log('student num : ', numStudents);
+
+        
+
+        
+
+        // while (newstudents.length > 0) {
+        //     enrollStudents(newstudents.pop())
+        // }
+
+
+        console.log(Boolean('')); // false
+        console.log(Boolean("  \t\n")); // true OOPs!
+
+
+        // boolean test on null and undefined
+
+        // var workshop = getRegistration(students);
+
+        // if(workshop) {
+        //     console.log(
+        //         `Welcome ${student.name} to ${workshop.name}.`
+        //     );
+        // }
+
+        //////////
+
+        Boolean(undefined); // false
+        Boolean(null);  /// false
+        Boolean({}); // true
+
+
+        /// ummm /// boxing
+
+        // DOM returns string but how we access to the .length well this is called Boxing
+        if (studentInput.value.length > 50) {
+            console.log(
+                `Studends name is too long.`
+            )
+        }
+
+        // but  i think it absolutely in spirit is an implicit coercion
+        // it is saying you have this thing that is not an object , and you trying to use it as it is an object, me,. Javascript i ma gonna be helpful and go ahead and make it into an object for you
+
+
+        // -->>>-  corner cases of coercion
+        
+
+        // every language has type conversion corner cases
+
+
+        // here is the some examples
+        Number( "" )   // ---> 0  opps
+        Number( " \t\n" ); // --> 0   oops
+        Number( null ); // --> 0   oops
+        Number( undefined ); // --> NaN
+        Number( [] );// --> 0  oops
+        Number( [1,2,3] ); // -->  NaN
+        Number( [null] ); // --> 0   oops
+        Number( [undefined] ); // --> 0  oops
+        Number( {} );// --> NaN
+        
+
+        String( -0 ); // --> "0"   oops
+        String( null );// --> 'null'
+        String( undefined ); // --> "undefined"
+        String( [null] ); // --> ""  oops
+        String( [undefined] ); // --> ""   oops
+        Boolean( Boolean(false) ); // --> true  /// oops
+
+
+        // root of all coercion evil
+
+        studentInput.value = "";
+        //..
+        Number(studentInput.value); // 0
+        studentInput.value = "    \t\n";
+        //..
+        Number(studentInput.value);  /// 0
+
+
+
+
+        // here is the worst case of using 0 and 1 for boolean coercion
+
+        Number(true);  // 1
+        Number(false);  // 0
+        
+        1 < 2; // true 
+        2 < 3; // true
+        1<2<3;  // true //(but ...) 
+
+        (1< 2) < 3;
+        (true) < 3;
+        1 < 3; //  true (hmm,,,)
+
+        // ********************
+
+        3 > 2; //  true
+        2 > 1; // true
+        3 > 2 > 1

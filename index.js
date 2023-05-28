@@ -200,38 +200,34 @@ Objects (Oriented)
 
 // console.clear();
 
-// TODO: define polyfill for `Object.is(..)`
-if (!Object.is || true) {
+
+
+
+
+if(!Object.is || true) {
     Object.is = function ObjectIs(x, y) {
-        var xNeg = isItNegZero(x);
-        var yNeg = isItNegZero(y);
+        var xNegZero = isNegZero(x);
+        var yNegZero= isNegZero(y);
 
-        if(xNeg || yNeg) {
-            return xNeg && yNeg;
-        }else if(isItNaN(x) && isItNaN(y) ){
+        if(xNegZero || yNegZero){
+            return xNegZero && yNegZero;
+        }
+        else if( isItNaN(x) && isItNaN(y)){
             return true;
-        }else if(x === y) {
-            return true;
-        } 
-        
-        return false;
-        
+        }else {
+            return x === y;
+        }
+        // 
 
+        function isNegZero(v) {
+            return v == 0 && (1 / v) == -Infinity;
+        }
 
-
-
-    function isItNegZero(x) {
-        return x === 0 && (1 / x) === -Infinity;
+        function isItNaN(v) {
+            return v !== v;
+        }
     }
-
-    function isItNaN(x) {
-        return x !== x;
-    }
-
-    };
 }
-
-
 
 
     // tests:
@@ -254,3 +250,201 @@ if (!Object.is || true) {
     console.log(Object.is(false, true) === false);
     console.log(Object.is(null, undefined) === false);
     console.log(Object.is(undefined, null) === false);
+    
+
+
+    //
+
+    // day 2/
+
+    // fundamental  Objects
+    // it was called differently before:
+        // built-in objects
+        // NATIVE functions
+
+    // usr new{keyword}: in these:
+        // --- Object() like new Object
+        // --- Array() -> we know there , we mostly create new array using new keyword -> const arr = new Array()
+        // --- Function() 
+        // --- Date()
+        // --- RegExp()
+        // --- Error()
+
+    // don's use new:
+        // --- String()
+        // --- Number()
+        // --- Boolean()
+
+    // examples
+
+    var yesterday = new Date('March 6, 2019');
+    console.log(yesterday.toUTCString()); // Tue, 05 Mar 2019 23:00:00 GMT
+    
+
+
+    var myGPA = String(/* gpa */);
+    // "3.54"
+
+    ////////////////////////////////////////////
+    /////////// Abstract operation/////////////
+    ///////////////////////////////////////////
+
+    // first abstract operation
+    
+    // ToPrimitive(hint)  -> (7.1.1)
+
+
+    // hint : 'Number'
+        // first it check valueOf() if it is there
+        // then toString()
+
+    // hint : 'string'
+        // first -> toString()
+        // then valueOf()
+
+        // second abstract operation
+        // toString   -> (7.1.12)
+        // .def -> it takes the any value, and it returns the string representation of that value
+
+        // examples for ToString
+
+        // null -> "null"
+        // undefined -> "undefined"
+        // true -> "true"
+        // false -> "false"
+        // 2.14159 -> "3.14159"
+        // 0 -> "0"
+        // -0 -> "-0"
+
+
+        //
+
+        // ToString(object) -> if we call ToString on an object it is going to invoke the toPrimitive with the string hint
+        // ToPrimitive(string)
+
+        // aka: toString / valueOf()
+
+        // what is it look like on examples
+
+        // []   ->   ""
+        // [1,2,3]   -> "1,2,3"
+        // [null, undefined]    ->   ","
+        //
+        // [[[],[],[]],[]]    -> ",,,"
+        // [,,,,]     ->    ",,,"
+
+
+        // {}   ->  "[object Object]"
+        // {a:2}  ->  "[object Object]"
+        // {tostring(){return "x";}}  ->  "x"
+
+
+
+
+        // third abstract operation is
+        // ToNumber()
+
+        /* 
+        ""   -> 0
+        "0"   -> 0
+        "-0"   -> -0 
+        " 009   "   -> 9
+        "3.14159"   -> 3.14159
+        "0."   -> 0
+        ".0"   -> 0
+        "."   -> NaN
+        "0xaf"   -> 175
+
+
+
+        false   -> 0
+        true   -> 1
+        null   -> 0
+        undefined   -> NaN
+
+
+        ToNumber (object):
+        ToPrimitive (number) 
+            // aka: valueOf() / toString()
+
+        (for any [] and {} by default)
+        value)f(){ return this;}
+        */
+
+
+        //  ---> ToString
+
+        /*
+        [""]   --->  0
+        ["0"]   --->  0
+        ["-0"]   --->  -0
+        [null]   --->  0
+        [undefined]   --->  0
+        [1, 2, 3]   --->  NaN
+        [[[[[]]]]]   --->  0
+        
+        object
+
+        {...}    --->  NaN
+        {valueOf(){
+            return 3
+        }}              ---> 3
+        */
+
+
+
+
+        //// i think we can to the fourth abstract operation
+        // ---> ToBoolean
+
+        /*
+        this operation is less algorithmic and more lookup
+        Truthy or Falsy
+        Falsy values list:
+        ""
+        0, -0, 
+        null, 
+        NaN, 
+        false, 
+        undefined
+
+
+        truthy values list is more, except falsy values everything is truthy: a bit common examples
+        'foo'
+        23
+        { a:1 }
+        [1, 2]
+        true
+        function(){}
+        ...
+        */
+
+
+
+        //// ---> Coercion
+
+        // you claim to avoid  coercion because it is evil but,,,
+        // let's see examples
+        var numStudents = 16;
+        console.log(
+            `There are ${numStudents} students.`
+        );
+
+
+        // there is one coercion happening. look we are getting student count in Number but when we use template string we are coercing number to string implicitly
+
+        var msg1 = "There are ";
+        numStudents = 17;
+        var msg2 = " students.";
+        console.log(msg1 + numStudents + msg2);
+            // here also we are adding number to string
+
+        // the plus operator either performs string concatenation or numeric addition
+        // then let's see in the examples above what magic is happening, in the expression if one of them is a string then it si gonna call toString to other and coercion happens there and To string convert number into string, and after everything is done with being converted to a string then addition operator does it's job  let's see another version of the magic
+
+        numStudents = 18;
+        console.log(
+            `There are ${[numStudents].join('')} students.`
+        );
+
+        // there  is using only join output will be a string

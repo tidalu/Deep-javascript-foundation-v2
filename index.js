@@ -595,11 +595,13 @@ if(!Object.is || true) {
         //..
         Number(studentInput.value);  /// 0
 
+        // nopt only empty string becomes zero, other all full of empty spaces becomes zero also, this is main corner case 
+
 
 
 
         // here is the worst case of using 0 and 1 for boolean coercion
-
+/*
         Number(true);  // 1
         Number(false);  // 0
         
@@ -615,4 +617,320 @@ if(!Object.is || true) {
 
         3 > 2; //  true
         2 > 1; // true
-        3 > 2 > 1
+        3 > 2 > 1  // false OOPS!
+
+        (3 > 2) > 1;
+        (true) > 1;
+        1 > 1 ; //false
+*/
+        ///------> Intentional corner cases
+
+        // you do not deal with these type conversion corner cases by avoiding coercions.
+        // instead you should adopt a coding style makes value types plain and obvious
+
+        // a quality JS program embraces coercions, making sure the types involved in every operation are clear. Thus, corner cases are safely managed
+
+
+        // not necessary to do
+        // Type Rigidity
+        // Static types
+        // types soundness
+
+        // Javascript's dynamic typing is not a weakness. it is one of its string qualities
+
+        // but but
+
+        // what about the junior devs?
+
+        // most developers tend to think that -> 
+        // implicit mechanisms are magical but it is not true 
+        // it is kinda automatic coercion in out code or we can say one type in Types, we saw some more examples for it, bad thing is we just see the result but we do not know what is happening in the background. but it is also very bad, we should think about implicitness as abstracted.
+
+        // hiding unnecessary details , re-forcing the reader and increasing clarity
+
+
+        // examples
+
+        numStudents = 25 ;
+        console.log(
+            `There are ${String(numStudents)} students`
+        )
+
+
+
+        numStudents = 34 ;
+        console.log(
+            `There are ${numStudents} students`
+        )
+
+        // another examples with comparison operators
+
+        var enroll = 12;
+        var enroll2 = studentInput.value;
+
+        if(Number(enroll) < Number(enroll2)) {
+            console.log('work 0')
+        }
+
+        if(enroll < enroll2) {
+            console.log('work 1')
+        } 
+
+        // here first example we have inputs and we are doing coercion , but if at least one input is a number, operator can make implicit coercion for us maybe we should lett it do it for use and we should omit the Number() primitive type
+
+        /// is showing the reader the extra type details helpful or distracting
+        // depends. 
+
+        // if a feature is sometime useful and sometime dangerous and if there is an better option always use the better option  --- it is abstract
+        // 1.  useful : when the reader focused on what is important
+        // 2. dangerous: when the reader can not tell what will happen
+        // 3. better: when the reader understands the code.
+
+
+        // it is irresponsible to knowingly avoid usage of a feature that can improve code readability
+
+
+        // examples with coercion
+        // TODO: write the validation functions
+
+        const isValidName = (x) => {
+            return (typeof x === 'string') ? x !== ''? Array.from(x.split('')).filter(x => x !== ' ').length >= 3? true: false :false :false;
+            //  if(typeof x === 'string'){
+            //    if(x !== ''){
+            //      if(x.trim().length >= 3){
+            //        return true;
+            //      }
+            //  }else {
+            //    return false;
+            //  }
+            // } 
+            }
+
+            function isValid (n) {
+                if (typeof n === 'string' && n.trim().length >= 3){
+                    return true ;
+
+                }return false;
+
+            }
+
+            function hoursAttended2 (x, y) {
+                if(
+                    typeof x === 'string' && x.trim() != ''
+                    ){
+                        x = Number(x)
+                }
+                if(
+                    typeof y === 'string' && y.trim() != ''
+                    ){
+                        y = Number(y)
+                }
+
+                if(
+                    typeof x == 'number' &&
+                    typeof y == 'number' &&
+                    y >= 0 &&
+                    x >= 0 &&
+                    Number.isInteger(x) &&
+                    Number.isInteger(y) &&
+                    x <= y 
+                ){
+                    return true;
+
+                }
+                return false;
+            }
+
+        
+
+            const hoursAttended = (x, y) => {
+                return (typeof x === 'string' && typeof y === 'string') || (typeof x === 'number' && typeof y === 'number') ? (typeof (x + y) === 'number') ? x >= 0 || y >= 0 ? x % 1 === 0 && y % 1 === 0 ? x <= y ? true : false : false : false : false: false;
+            }
+
+
+        // tests:
+        console.log(isValidName("Frank") === true);
+        console.log(hoursAttended(6,10) === true);
+        console.log(hoursAttended(6,"10") === true);
+        console.log(hoursAttended("6",10) === true);
+        console.log(hoursAttended("6","10") === true);
+
+        console.log(isValidName(false) === false);
+        console.log(isValidName(null) === false);
+        console.log(isValidName(undefined) === false);
+        console.log(isValidName("") === false);
+        console.log(isValidName("  \t\n") === false);
+        console.log(isValidName("X") === false);
+        console.log(hoursAttended("",6) === false);
+        console.log(hoursAttended(6,"") === false);
+        console.log(hoursAttended("","") === false);
+        console.log(hoursAttended("foo",6) === false);
+        console.log(hoursAttended(6,"foo") === false);
+        console.log(hoursAttended("foo","bar") === false);
+        console.log(hoursAttended(null,null) === false);
+        console.log(hoursAttended(null,undefined) === false);
+        console.log(hoursAttended(undefined,null) === false);
+        console.log(hoursAttended(undefined,undefined) === false);
+        console.log(hoursAttended(false,false) === false);
+        console.log(hoursAttended(false,true) === false);
+        console.log(hoursAttended(true,false) === false);
+        console.log(hoursAttended(true,true) === false);
+        console.log(hoursAttended(10,6) === false);
+        console.log(hoursAttended(10,"6") === false);
+        console.log(hoursAttended("10",6) === false);
+        console.log(hoursAttended("10","6") === false);
+        console.log(hoursAttended(6,10.1) === false);
+        console.log(hoursAttended(6.1,10) === false);
+        console.log(hoursAttended(6,"10.1") === false);
+        console.log(hoursAttended("6.1",10) === false);
+        console.log(hoursAttended("6.1","10.1") === false);
+
+        // double versus triple equals
+        // == -vs.-- ===
+
+        // == checks value (loose)
+        // === checks the value abd type (strict)
+
+        // if you are trying to really understand your code , it is critical you learn to think like js
+
+        // actually on the internet they are compared whong, they both check types lets see each
+        
+
+        // double equality
+            // it is what the spec says about:::
+
+            //The comparison x == y, where x and y are values, produces true or false. Such a comparison is performed as follows:
+
+            
+            // !!!.If Type(x) is the same as Type(y), then
+            
+            // !!!.Return the result of performing Strict Equality Comparison x === y.
+            
+            // !!!.If x is null and y is undefined, return true.
+            
+            // !!!.If x is undefined and y is null, return true.
+            
+            // !!!.If Type(x) is Number and Type(y) is String, return the result of the comparison x == ! ToNumber(y).
+            
+            // !!!.If Type(x) is String and Type(y) is Number, return the result of the comparison ! ToNumber(x) == y.
+            
+            // !!!.If Type(x) is Boolean, return the result of the comparison ! ToNumber(x) == y.
+            
+            // !!!.If Type(y) is Boolean, return the result of the comparison x == ! ToNumber(y).
+            
+            // !!!.If Type(x) is either String, Number, or Symbol and Type(y) is Object, return the result of the comparison x == ToPrimitive(y).
+            
+            // !!!.If Type(x) is Object and Type(y) is either String, Number, or Symbol, return the result of the comparison ToPrimitive(x) == y.
+            
+            // !!!.Return false.
+
+
+
+
+
+            /// triple equality
+
+            //The comparison x === y, where x and y are values, produces true or false. Such a comparison is performed as follows:
+
+            
+            // !!!---If Type(x) is different from Type(y), return false.
+            
+            // !!!---If Type(x) is Number, then
+            
+            // !!!---If x is NaN, return false.
+            
+            // !!!---If y is NaN, return false.
+            
+            // !!!---If x is the same Number value as y, return true.
+            
+            // !!!---If x is +0 and y is -0, return true.
+            
+            // !!!---If x is -0 and y is +0, return true.
+            
+            // !!!---Return false.
+            
+            // !!!---Return SameValueNonNumber(x, y).
+
+
+            var studentName1 = 'Frank';
+            var studentName2 = `${studentName1}`;
+
+            var studentShow1 = 16;
+            var studentShow2 = studentShow1 + 0;
+
+            console.log(studentName1 == studentName2);
+            console.log(studentName1 === studentName2);
+            
+            console.log(studentShow1 == studentShow2);
+            console.log(studentShow1 === studentShow2);
+
+            // all above log true
+            // if types match to compare them we can u se both equalities
+
+            // triple equals here, if types are not the same just return false, it s=does not do anything, 
+
+            // in the case, if they are match and if both are null it returns false we covered it above , and if they are -0 and 0 it return true, we also covered it above
+
+            var workshop = {
+                name: "Deep JS Foundation"
+            };
+
+            var workshop1 = {
+                name: "Deep JS Foundations"
+            }
+
+            if ( workshop == workshop1){
+                console.log('true');
+            } else {
+                console.log('false');
+            }
+
+            if ( workshop === workshop1){
+                console.log('tre');
+            }else {
+                console.log('false');
+            }
+
+
+            // as every other operation coercive is helpful in equality if u really know what the types are;
+
+            // let's look at double equals what to do if the types are different;
+            // if x is null and y is undefined or can be opposite, it will return true;
+            //  these two only coercive to each other
+
+            // null and undefined have some differences between such as the default value algorithm, but in other most cases we can treat null and undefined as indistinguishable through coercive equality
+
+            workshop = { topic: null };
+            workshop1 = {};
+
+            if(
+                (workshop.topic === null || workshop.topic === undefined ) && (workshop1.topic === null || workshop1.topic === undefined )
+            ){
+                //....
+            }
+
+
+            if(
+                workshop.topic == null &&
+                workshop1.topic == null
+            ){
+                //...
+            }
+
+            // == equality prefers to compare numbers , so if there is an number x and string y , it implicitly call toNumber(y) then it does it 's job
+
+            // let's see some examples, 
+            var x = '45';
+            var y = 23;
+
+            if(Number(x) === Number(y)) {
+                // ..
+            }
+
+            // here if we know what inputs are coming exactly. and if they might be different, we cannot use === cuz, we should convert them into numbers, at that time we can use == equaly, cuz it's algorithm works like for numbers, i mean if one of the input is number it implicitly converts the second different input to a number, then it goes, and in the double equals, if both inouts are strings the same, then it does the algorithm of the triple equals, it compares the type
+
+            if(x == y) {
+                //...
+            }
+
+            // double equals only compares primitives if any is not primitive type then it implicitly use toPrimitive(non)

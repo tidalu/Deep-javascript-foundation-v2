@@ -102,3 +102,48 @@ if(0 === 0){}
 if(true) {
     // yep }}}
 }
+
+// how to avoid these corner cases in ==
+
+// avoid
+// 1. == with 0 or ""(or even " ")
+// 2. == with non-primitives
+// 3. == true or == false: allow toBoolean or use ===
+
+
+// the case for preferring ==
+
+// Knowing the types is always better than now knowing them
+// static types is not the only(or even necessarily best) way to know your types 
+
+// == is not about types without knowing types
+// never use the double equals when you don;'t know the types, only use when u know the types
+// == is about comparisons with known types , optionally where conversions are helpful
+
+//if u know the types in a comparison :
+// if both types are the same, == is identical to ===
+
+// using === would be unnecessary , so prefer the shorter ==
+
+// since === is pointless when the types dont match, it is similarly unnecessary when they do  match
+
+// if u know the types in comparison
+// if they are different , using === would be broken
+
+
+// if u knwo the types they are not mathc, u have two options
+// on is not to compare them, 
+// secons is to use == 
+
+
+// if u know the types  in comparison
+
+// if the types are different, the equivalent of one == would be two(or more) === (ie, slower);+
+
+// at this time prefer == is faster
+
+// if the types are different. two of more === comparison may distract the reader
+
+// prefer the cleaner  single ==
+
+// summary: whether the types match or not, == is more sensible choice

@@ -174,7 +174,8 @@ Objects (Oriented)
     // trendRate > 0; // false
 
     // Object.is(trendRate, -0);  /// true
-    // Object.is(trendRate, 0); /// false
+    // Object.is(tre
+    
 
 
     // Object.is( determines whether two values are the same value, and return boolean respectively)
@@ -744,7 +745,7 @@ if(!Object.is || true) {
         
 
             const hoursAttended = (x, y) => {
-                return (typeof x === 'string' && typeof y === 'string') || (typeof x === 'number' && typeof y === 'number') ? (typeof (x + y) === 'number') ? x >= 0 || y >= 0 ? x % 1 === 0 && y % 1 === 0 ? x <= y ? true : false : false : false : false: false;
+                return (typeof x === 'string' && typeof y === 'string') || (typeof x === 'number' && typeof y === 'number') ? (typeof (x + y) === 'number') ? x >= 0 || y >= 0 ? x % 1 === 0 && y % 1 === 0 ? x <= y ? true : false : false : false : false: false; // there is an error logical
             }
 
 
@@ -934,3 +935,4 @@ if(!Object.is || true) {
             }
 
             // double equals only compares primitives if any is not primitive type then it implicitly use toPrimitive(non)
+            

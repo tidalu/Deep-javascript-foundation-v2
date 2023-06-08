@@ -52,9 +52,9 @@ if(arr == !arr1){}
 if([] == false){
 
 }
-if("" == false){}
-if(0 = false){}
-if(0===0){}
+// if("" == false){}
+// if(0 = false){}
+// if(0===0){}
 if(true){
     // true what????
 }
@@ -147,3 +147,124 @@ if(true) {
 // prefer the cleaner  single ==
 
 // summary: whether the types match or not, == is more sensible choice
+
+// if u dont know the types in a comparison
+
+// not knowing the types means not fully understanding the code
+
+// so best to refactor you can know the types is possible
+
+// the uncertainty of not knowing types should be obvious to reader
+
+// most obvious signal is ===
+
+// also not knowing the types is equivalent to assuming type conversion will occur
+
+// because of corner cases the only safe choice is ===
+
+// summary: if u cannot or wont use know and obvious types, === is the only reasonable choice
+
+// even if  === would always be equivalent to == in your code, using it everywhere sends wrong semantic signal "Protecting myself since i don't know/trust the types"
+
+// summary : making types known and obvious leads to better code. if types are known, == is the best, otherwise, fallback to ===
+
+// Exercises of equality
+
+// TODO: write `findAll(..)`
+
+function findAll(value, arr){
+    var newArr = new Array();
+    for(var i = 0; i < arr.length; i++){
+        if(Object.is(arr[i], value)){
+            newArr.push(arr[i]);
+        }
+        if(typeof value == "string" ){
+            if(Number(value) == arr[i]){
+                newArr.push(arr[i]);
+            } else if( value.split(' ').length == 0 && arr[i].split(' ').length == 0){
+                newArr.push(arr[i]);
+            }
+        }else if( typeof value == "number" && isNaN(value) && !value == Infinity ){
+            if(String(value) == arr[i]){
+                newArr.push(arr[i]);
+            }
+        }else 
+        if(value == null || value == undefined){
+            if(arr[i] == null || arr[i] == undefined){
+                if(value == arr[i] || value != arr[i]){
+                    newArr.push(arr[i]);
+                }
+            }
+        } else 
+        if(typeof value == "boolean" && typeof arr[i] == "boolean"){
+            if(value == arr[i]){
+                newArr.push(arr[i]);
+            }
+        }else 
+        if(typeof value == "object" ){
+            if(typeof arr[i] == "object"){
+                if(Object.is(value, arr[i])){
+                    newArr.push(arr[i]);
+                }
+            }
+
+        }
+        
+
+
+    }
+    return newArr;
+}
+
+
+// tests:
+var myObj = { a: 2 };
+
+var values = [
+	null, undefined, -0, 0, 13, 42, NaN, -Infinity, Infinity,
+	"", "0", "42", "42hello", "true", "NaN", true, false, myObj
+];
+
+console.log(setsMatch(findAll(null,values),[null,undefined]) === true);
+console.log(setsMatch(findAll(undefined,values),[null,undefined]) === true);
+console.log(setsMatch(findAll(0,values),[0,"0"]) === true);
+console.log(setsMatch(findAll(-0,values),[-0]) === true);
+console.log(setsMatch(findAll(13,values),[13]) === true);
+console.log(setsMatch(findAll(42,values),[42,"42"]) === true);
+console.log(setsMatch(findAll(NaN,values),[NaN]) === true);
+console.log(setsMatch(findAll(-Infinity,values),[-Infinity]) === true);
+console.log(setsMatch(findAll(Infinity,values),[Infinity]) === true);
+console.log(setsMatch(findAll("",values),[""]) === true);
+console.log(setsMatch(findAll("0",values),[0,"0"]) === true);
+console.log(setsMatch(findAll("42",values),[42,"42"]) === true);
+console.log(setsMatch(findAll("42hello",values),["42hello"]) === true);
+console.log(setsMatch(findAll("true",values),["true"]) === true);
+console.log(setsMatch(findAll(true,values),[true]) === true);
+console.log(setsMatch(findAll(false,values),[false]) === true);
+console.log(setsMatch(findAll(myObj,values),[myObj]) === true);
+
+console.log(setsMatch(findAll(null,values),[null,0]) === false);
+console.log(setsMatch(findAll(undefined,values),[NaN,0]) === false);
+console.log(setsMatch(findAll(0,values),[0,-0]) === false);
+console.log(setsMatch(findAll(42,values),[42,"42hello"]) === false);
+console.log(setsMatch(findAll(25,values),[25]) === false);
+console.log(setsMatch(findAll(Infinity,values),[Infinity,-Infinity]) === false);
+console.log(setsMatch(findAll("",values),["",0]) === false);
+console.log(setsMatch(findAll("false",values),[false]) === false);
+console.log(setsMatch(findAll(true,values),[true,"true"]) === false);
+console.log(setsMatch(findAll(true,values),[true,1]) === false);
+console.log(setsMatch(findAll(false,values),[false,0]) === false);
+
+// ***************************
+
+function setsMatch(arr1,arr2) {
+	if (Array.isArray(arr1) && Array.isArray(arr2) && arr1.length == arr2.length) {
+		for (let v of arr1) {
+			if (!arr2.includes(v)) return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+console.log(typeof myObj);

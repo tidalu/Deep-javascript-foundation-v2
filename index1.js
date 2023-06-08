@@ -2,12 +2,11 @@ console.clear();
 var hello = 42;
 var hello1 = [42];
 
-if(hello == hello1){
+if (hello == hello1) {
     console.log('yes')
 }
 
-if( 42 == '42')
-{
+if (42 == '42') {
     console.log('yes');
 }
 // == it prefers numerification, cuz, it has two options, call toString() and compare strings or calling ToNumber() and compare numbers, but it prefers numbers, string becomes number
@@ -15,8 +14,7 @@ if( 42 == '42')
 
 
 
-if( 42 === 42)
-{
+if (42 === 42) {
     console.log('yes');
 }
 
@@ -36,11 +34,11 @@ if( 42 === 42)
 var arr = [];
 var arr1 = [];
 
-if(arr == !arr1){
+if (arr == !arr1) {
     console.log('yep');
 }
 
-if(arr != arr1){
+if (arr != arr1) {
     console.log('yep');
 }
 
@@ -48,48 +46,48 @@ if(arr != arr1){
 //
 
 
-if(arr == !arr1){}
-if([] == false){
+if (arr == !arr1) { }
+if ([] == false) {
 
 }
 // if("" == false){}
 // if(0 = false){}
 // if(0===0){}
-if(true){
+if (true) {
     // true what????
 }
 
-if(arr != arr1){}
-if(!(arr == arr1)){}
-if(!(false)){}
-if(true){
+if (arr != arr1) { }
+if (!(arr == arr1)) { }
+if (!(false)) { }
+if (true) {
     // yep whjat???????
 }
 
 //
 
-if(arr){
+if (arr) {
     // logs true
 }
 
-if(arr == true){
+if (arr == true) {
     // nope :(
 }
 
-if(arr == false){
+if (arr == false) {
     // yep :(
 }
 
 // if(arr){}
 // if(Boolean(arr)){
-if(true){
+if (true) {
     // yep
 }
 
 // if(arr == true){}
 // if("" == true){}
 // if( 0 === 1){}
-if(false){
+if (false) {
     // Nope:()
 }
 
@@ -99,7 +97,7 @@ if("" == false){}
 if(0 === 0){}
 
 */
-if(true) {
+if (true) {
     // yep }}}
 }
 
@@ -172,48 +170,63 @@ if(true) {
 
 // TODO: write `findAll(..)`
 
-function findAll(value, arr){
+function findAll1(value, arr) {
     var newArr = new Array();
-    for(var i = 0; i < arr.length; i++){
-        if(Object.is(arr[i], value)){
+    for (var i = 0; i < arr.length; i++) {
+        if (Object.is(arr[i], value)) {
             newArr.push(arr[i]);
         }
-        if(typeof value == "string" ){
-            if(Number(value) == arr[i]){
+        if (typeof value == "string") {
+            if (Number(value) == arr[i]) {
                 newArr.push(arr[i]);
-            } else if( value.split(' ').length == 0 && arr[i].split(' ').length == 0){
-                newArr.push(arr[i]);
-            }
-        }else if( typeof value == "number" && isNaN(value) && !value == Infinity ){
-            if(String(value) == arr[i]){
+            } else if (value.split(' ').length == 0 && arr[i].split(' ').length == 0) {
                 newArr.push(arr[i]);
             }
-        }else 
-        if(value == null || value == undefined){
-            if(arr[i] == null || arr[i] == undefined){
-                if(value == arr[i] || value != arr[i]){
-                    newArr.push(arr[i]);
+        } else if (typeof value == "number" && isNaN(value) && !value == Infinity) {
+            if (String(value) == arr[i]) {
+                newArr.push(arr[i]);
+            }
+        } else
+            if (value == null || value == undefined) {
+                if (arr[i] == null || arr[i] == undefined) {
+                    if (value == arr[i] || value != arr[i]) {
+                        newArr.push(arr[i]);
+                    }
                 }
-            }
-        } else 
-        if(typeof value == "boolean" && typeof arr[i] == "boolean"){
-            if(value == arr[i]){
-                newArr.push(arr[i]);
-            }
-        }else 
-        if(typeof value == "object" ){
-            if(typeof arr[i] == "object"){
-                if(Object.is(value, arr[i])){
-                    newArr.push(arr[i]);
+            } else
+                if (typeof value == "boolean" && typeof arr[i] == "boolean") {
+                    if (value == arr[i]) {
+                        newArr.push(arr[i]);
+                    }
                 }
-            }
-
-        }
-        
-
 
     }
     return newArr;
+}
+
+function findAll(match, arr) {
+    var ret = [];
+    for (let v of arr) {
+        if (Object.is(match, v)) {
+            ret.push(v);
+        }
+        else if (match == null && v == null) {
+            ret.push(v);
+        } else if (typeof match == "boolean" && typeof v == "boolean") {
+            if (match == v) {
+                ret.push(v);
+            }
+        } else if (typeof match == "string" && match.trim() != "" && typeof v == "number" && !Object.is(v, -0)) {
+            if (match == v) {
+                ret.push(v)
+            }
+        } else if (typeof match == "number" && !Object.is(match, -0) && !Object.is(match, NaN) && !Object.is(match, Infinity) && !Object.is(match, -Infinity) && typeof v == "string" && v.trim() != "") {
+            if (match == v) {
+                ret.push(v);
+            }
+        }
+    }
+    return ret;
 }
 
 
@@ -221,50 +234,50 @@ function findAll(value, arr){
 var myObj = { a: 2 };
 
 var values = [
-	null, undefined, -0, 0, 13, 42, NaN, -Infinity, Infinity,
-	"", "0", "42", "42hello", "true", "NaN", true, false, myObj
+    null, undefined, -0, 0, 13, 42, NaN, -Infinity, Infinity,
+    "", "0", "42", "42hello", "true", "NaN", true, false, myObj
 ];
 
-console.log(setsMatch(findAll(null,values),[null,undefined]) === true);
-console.log(setsMatch(findAll(undefined,values),[null,undefined]) === true);
-console.log(setsMatch(findAll(0,values),[0,"0"]) === true);
-console.log(setsMatch(findAll(-0,values),[-0]) === true);
-console.log(setsMatch(findAll(13,values),[13]) === true);
-console.log(setsMatch(findAll(42,values),[42,"42"]) === true);
-console.log(setsMatch(findAll(NaN,values),[NaN]) === true);
-console.log(setsMatch(findAll(-Infinity,values),[-Infinity]) === true);
-console.log(setsMatch(findAll(Infinity,values),[Infinity]) === true);
-console.log(setsMatch(findAll("",values),[""]) === true);
-console.log(setsMatch(findAll("0",values),[0,"0"]) === true);
-console.log(setsMatch(findAll("42",values),[42,"42"]) === true);
-console.log(setsMatch(findAll("42hello",values),["42hello"]) === true);
-console.log(setsMatch(findAll("true",values),["true"]) === true);
-console.log(setsMatch(findAll(true,values),[true]) === true);
-console.log(setsMatch(findAll(false,values),[false]) === true);
-console.log(setsMatch(findAll(myObj,values),[myObj]) === true);
+console.log(setsMatch(findAll(null, values), [null, undefined]) === true);
+console.log(setsMatch(findAll(undefined, values), [null, undefined]) === true);
+console.log(setsMatch(findAll(0, values), [0, "0"]) === true);
+console.log(setsMatch(findAll(-0, values), [-0]) === true);
+console.log(setsMatch(findAll(13, values), [13]) === true);
+console.log(setsMatch(findAll(42, values), [42, "42"]) === true);
+console.log(setsMatch(findAll(NaN, values), [NaN]) === true);
+console.log(setsMatch(findAll(-Infinity, values), [-Infinity]) === true);
+console.log(setsMatch(findAll(Infinity, values), [Infinity]) === true);
+console.log(setsMatch(findAll("", values), [""]) === true);
+console.log(setsMatch(findAll("0", values), [0, "0"]) === true);
+console.log(setsMatch(findAll("42", values), [42, "42"]) === true);
+console.log(setsMatch(findAll("42hello", values), ["42hello"]) === true);
+console.log(setsMatch(findAll("true", values), ["true"]) === true);
+console.log(setsMatch(findAll(true, values), [true]) === true);
+console.log(setsMatch(findAll(false, values), [false]) === true);
+console.log(setsMatch(findAll(myObj, values), [myObj]) === true);
 
-console.log(setsMatch(findAll(null,values),[null,0]) === false);
-console.log(setsMatch(findAll(undefined,values),[NaN,0]) === false);
-console.log(setsMatch(findAll(0,values),[0,-0]) === false);
-console.log(setsMatch(findAll(42,values),[42,"42hello"]) === false);
-console.log(setsMatch(findAll(25,values),[25]) === false);
-console.log(setsMatch(findAll(Infinity,values),[Infinity,-Infinity]) === false);
-console.log(setsMatch(findAll("",values),["",0]) === false);
-console.log(setsMatch(findAll("false",values),[false]) === false);
-console.log(setsMatch(findAll(true,values),[true,"true"]) === false);
-console.log(setsMatch(findAll(true,values),[true,1]) === false);
-console.log(setsMatch(findAll(false,values),[false,0]) === false);
+console.log(setsMatch(findAll(null, values), [null, 0]) === false);
+console.log(setsMatch(findAll(undefined, values), [NaN, 0]) === false);
+console.log(setsMatch(findAll(0, values), [0, -0]) === false);
+console.log(setsMatch(findAll(42, values), [42, "42hello"]) === false);
+console.log(setsMatch(findAll(25, values), [25]) === false);
+console.log(setsMatch(findAll(Infinity, values), [Infinity, -Infinity]) === false);
+console.log(setsMatch(findAll("", values), ["", 0]) === false);
+console.log(setsMatch(findAll("false", values), [false]) === false);
+console.log(setsMatch(findAll(true, values), [true, "true"]) === false);
+console.log(setsMatch(findAll(true, values), [true, 1]) === false);
+console.log(setsMatch(findAll(false, values), [false, 0]) === false);
 
 // ***************************
 
-function setsMatch(arr1,arr2) {
-	if (Array.isArray(arr1) && Array.isArray(arr2) && arr1.length == arr2.length) {
-		for (let v of arr1) {
-			if (!arr2.includes(v)) return false;
-		}
-		return true;
-	}
-	return false;
+function setsMatch(arr1, arr2) {
+    if (Array.isArray(arr1) && Array.isArray(arr2) && arr1.length == arr2.length) {
+        for (let v of arr1) {
+            if (!arr2.includes(v)) return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 console.log(typeof myObj);

@@ -36,8 +36,8 @@ type student  = { name : string };
 
 var firstStudent: student = { name: "Frank" };
 
-var firstStudentName: string = getName(firstStudent);
-console.log(firstStudentName);
+// var firstStudentName: string = getName(firstStudent);
+// console.log(firstStudentName);
 
 
 // another example

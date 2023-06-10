@@ -26,7 +26,7 @@ var keyhandler = function keyhandler() {
 
 //   1.     name function expressions;
 
-// reasoss to choo0se always naem function expressions
+// reasoss to choo0se always name function expressions
 
     // 1. reliable function self-reference*(recursion, etc);
     // 2. more debuggable stack traces

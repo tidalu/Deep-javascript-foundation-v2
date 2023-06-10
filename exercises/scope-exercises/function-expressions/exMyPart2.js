@@ -14,24 +14,24 @@ var currentEnrollment = [410, 105, 664, 375];
 
 function printRecords(recordIds) {
 	var newArr = [];
-	studentRecords.forEach(function (x) {
+	studentRecords.forEach(x => {
 		if (recordIds.includes(x.id)) {
 			newArr.push(x);
 		}
 	});
-	newArr.sort(function sorting(name1, name2){
+	newArr.sort((name1, name2) => {
 		return name1.name > name2.name ?  1 :  -1;
 	})
 
-	newArr.forEach(function(x){
-		console.log(`${x.name} (${x.id}): ${x.paid ? "paid" : "not paid"}`);
+	newArr.forEach( x => 
+		console.log(`${x.name} (${x.id}): ${x.paid ? "paid" : "not paid"}`)
 
-	})
+	);
 }
 
 function paidStudentsToEnroll() {
 	const isToEnroll = []
-	studentRecords.filter(function (x){
+	studentRecords.filter((x)=>{
 		if(currentEnrollment.includes(x.id)){
 			isToEnroll.push(x.id);
 		}else if(x.paid){
@@ -43,7 +43,7 @@ function paidStudentsToEnroll() {
 
 function remindUnpaid(recordIds) {
 	const unpaid = [];
-	studentRecords.filter(function (x){
+	studentRecords.filter( x => {
 		return !x.paid ? recordIds.includes(x.id)? unpaid.push(x.id) : -1: -1;
 	});
 	printRecords(unpaid);

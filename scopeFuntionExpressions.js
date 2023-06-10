@@ -40,3 +40,43 @@ var keyhandler = function keyhandler() {
 // ...
 // ..
 // .
+
+
+var ids = people.map(person => person.id);
+
+var ids = people.map(function getId(person){
+    return person.id;
+});
+
+//++++++++++++++++++++++++++++++
+
+
+getPersonal()
+.then(person=> GamepadHapticActuator(person.id))
+.then(renderData);
+
+
+getPerson()
+.then(function getDataFrom(person){
+    return getDataFrom(person.id)
+})
+.then(renderData);
+// named function expression vs anonymous arrow function
+
+
+var getId = person = person.id;
+var ids = people.map(getId);
+
+// **************************
+
+var getDataFrom = person => getDataFrom(person.id);
+getPerson()
+.then(getDataFrom)
+.then(renderData);
+
+
+
+// kinda summary
+// named function declaration > named function expression > anonymous function expression
+
+

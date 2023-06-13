@@ -91,3 +91,7 @@ workShop.ask("it is a simple module, right?");  // here we cannot ask teh teache
 
 import askH from './module.mjs';
 askH("My mate, how are you?");
+
+// import * as a from "./module.mjs";
+
+// a.ask("My mate, how are you?");

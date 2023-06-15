@@ -1,0 +1,1 @@
+// delegation : design patten

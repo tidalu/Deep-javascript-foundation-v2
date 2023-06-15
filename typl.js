@@ -49,4 +49,5 @@ console.log(studentAge);
 
 // var firstStudentName = getName(firstStudent);
 
-// it is written ofr typl but it is having some errors so i do not know
+// it is written ofr typl but it is having some errors so i do not know© 2023 GitHub, Inc.
+

@@ -933,7 +933,7 @@ if(!Object.is || true) {
             if(x == y) {
                 //...
             }
-
+            
             // double equals only compares primitives if any is not primitive type then it implicitly use toPrimitive(non)
             
             

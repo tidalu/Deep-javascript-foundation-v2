@@ -3,7 +3,7 @@ var hello = 42;
 var hello1 = [42];
 
 if (hello == hello1) {
-    console.log('yes')
+    console.log('1', 'yes')
 }
 
 if (42 == '42') {

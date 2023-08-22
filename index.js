@@ -939,28 +939,57 @@ if (x == y) {
 
 // ignore from this line
 
+
 function print(a, b) {
     var arr = [];
     var count = 1;
 
+
+    for (let j = 0; j < b; j++) {
+        arr[j] = [];
+    }
     for (let i = 0; i < a; i++) {
-        var add = [];
         for (let j = 0; j < b; j++) {
             if (i % 2 === 0) {
-                add[j] = count++;
+                arr[j][i] = count++;
             } else {
-                add[b - 1 - j] = count++;
+                arr[b - j - 1][i] = count++;
             }
         }
-        arr.push(add);
     }
     return arr;
 }
+
+
+// function print(a, b) {
+//     var arr = [];
+//     var count = 1;
+
+//     for (let i = 0; i < a; i++) {
+//         for (let j = 0; j < b; j++) {
+//             if (!arr[j]) { 
+//               arr[j] = [];
+//             }
+//             if (i % 2 === 0) {
+//                 arr[j][i] = count++;
+//             } else {
+//                 arr[b - j - 1][i] = count++;
+//             }
+//         }
+//     }
+//     return arr;
+// }
+
+
+
+
+
 console.clear();
-const result = print(4, 5);
-for (let row of result) {
-    console.log(row.join("\t"));
-}
+const result = print(5, 4);
+console.log(result)
+
+
+
 
 
 /**

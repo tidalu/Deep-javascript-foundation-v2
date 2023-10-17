@@ -30,6 +30,7 @@ class anotherWorkshop1 extends anotherWorkshop{
         this.ask(msg);
     }
 }
+
 class anotherWorkshop2 extends anotherWorkshop{
     speakUp(msg){
         super.ask(msg.toUpperCase());

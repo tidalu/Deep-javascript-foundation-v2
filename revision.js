@@ -740,3 +740,27 @@ f("a");
 // Firefox: -> 0.788
 // Chrome: -> 0.788
 // IE11: -> 0.788
+
+// IIFE usage 
+
+(function name() { // It's an function expression bcz he starting with the parenthesis not with function keyword.
+    console.log('This is initial str');
+})()
+
+var newModule = (function (smth) {
+  var smth = "this is private, it is not accessable from outside world";
+  
+  return {
+    getResult : function() {
+      return smth
+    }, 
+    changeResult: function(get) {
+      smth = get;
+      return "passwd is changed"
+    }
+  }
+})()
+
+console.log(newModule.getResult())
+console.log(newModule.changeResult("it is not safe anymore"))
+console.log(newModule.getResult())
